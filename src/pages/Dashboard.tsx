@@ -54,13 +54,13 @@ export default function Dashboard() {
 
   return (
     <Protected>
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/10">
+      <div className="min-h-screen bg-background text-foreground dark">
         {/* Header */}
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-10"
+          className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-20"
         >
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -76,7 +76,7 @@ export default function Dashboard() {
           </div>
         </motion.header>
 
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="container mx-auto px-4 py-8 max-w-4xl relative z-10">
           {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -92,7 +92,7 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-4 mb-8"
+            className="flex flex-col sm:flex-row gap-4 mb-8 p-4 bg-card/80 backdrop-blur-md rounded-xl border border-border"
           >
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -100,13 +100,13 @@ export default function Dashboard() {
                 placeholder="Search todos..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
+                className="pl-10 bg-input/50 border-border"
               />
             </div>
             
             <div className="flex gap-2">
               <Select value={filterStatus} onValueChange={(value: any) => setFilterStatus(value)}>
-                <SelectTrigger className="w-[140px]">
+                <SelectTrigger className="w-[140px] bg-input/50 border-border">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue />
                 </SelectTrigger>
@@ -118,7 +118,7 @@ export default function Dashboard() {
               </Select>
 
               <Select value={filterPriority} onValueChange={(value: any) => setFilterPriority(value)}>
-                <SelectTrigger className="w-[140px]">
+                <SelectTrigger className="w-[140px] bg-input/50 border-border">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -129,7 +129,7 @@ export default function Dashboard() {
                 </SelectContent>
               </Select>
 
-              <Button onClick={() => setShowForm(true)} className="shrink-0">
+              <Button onClick={() => setShowForm(true)} className="shrink-0 shadow-[0_0_10px_var(--primary)] hover:shadow-[0_0_20px_var(--primary)] transition-shadow">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Todo
               </Button>
@@ -147,12 +147,12 @@ export default function Dashboard() {
               // Loading state
               <div className="space-y-4">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="p-4 rounded-xl border animate-pulse">
+                  <div key={i} className="p-4 rounded-xl border border-border bg-card/50 backdrop-blur-sm animate-pulse">
                     <div className="flex items-start gap-3">
-                      <div className="w-4 h-4 bg-muted rounded mt-1"></div>
-                      <div className="flex-1">
-                        <div className="h-4 bg-muted rounded mb-2"></div>
-                        <div className="h-3 bg-muted rounded w-2/3"></div>
+                      <div className="w-5 h-5 bg-muted rounded-md mt-1"></div>
+                      <div className="flex-1 space-y-2">
+                        <div className="h-4 bg-muted rounded w-3/4"></div>
+                        <div className="h-3 bg-muted rounded w-1/2"></div>
                       </div>
                     </div>
                   </div>
@@ -160,7 +160,7 @@ export default function Dashboard() {
               </div>
             ) : filteredTodos.length === 0 ? (
               // Empty state
-              <div className="text-center py-12">
+              <div className="text-center py-16 bg-card/50 backdrop-blur-sm rounded-xl border border-border">
                 <CheckCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2">
                   {searchQuery || filterStatus !== "all" || filterPriority !== "all" 

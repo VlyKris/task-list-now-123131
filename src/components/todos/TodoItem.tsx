@@ -65,39 +65,41 @@ export function TodoItem({ todo, onEdit }: TodoItemProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className={`group p-4 rounded-xl border transition-all hover:shadow-md ${
+      layout
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className={`group p-4 rounded-xl border transition-all hover:shadow-lg hover:border-primary/50 ${
         todo.completed 
-          ? "bg-muted/50 border-border/50" 
-          : "bg-card border-border hover:border-primary/20"
+          ? "bg-card/30 border-border/50" 
+          : "bg-card/80 backdrop-blur-md border-border"
       }`}
     >
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-4">
         <Checkbox
           checked={todo.completed}
           onCheckedChange={handleToggle}
-          className="mt-1"
+          className="mt-1 w-5 h-5 rounded-md"
         />
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className={`font-medium ${todo.completed ? "line-through text-muted-foreground" : ""}`}>
+            <h3 className={`font-medium transition-colors ${todo.completed ? "line-through text-muted-foreground" : "text-foreground"}`}>
               {todo.title}
             </h3>
-            <span className={`px-2 py-1 text-xs rounded-full font-medium ${priorityColors[todo.priority]}`}>
-              {todo.priority}
-            </span>
           </div>
+          <span className={`px-2 py-0.5 text-xs rounded-full font-medium ${priorityColors[todo.priority]}`}>
+            {todo.priority}
+          </span>
           
           {todo.description && (
-            <p className={`text-sm mb-2 ${todo.completed ? "line-through text-muted-foreground" : "text-muted-foreground"}`}>
+            <p className={`text-sm mt-2 transition-colors ${todo.completed ? "line-through text-muted-foreground/70" : "text-muted-foreground"}`}>
               {todo.description}
             </p>
           )}
           
-          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+          <div className="flex items-center gap-4 text-xs text-muted-foreground mt-3">
             <div className="flex items-center gap-1">
               <Clock className="h-3 w-3" />
               {formatDate(todo._creationTime)}

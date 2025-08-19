@@ -96,9 +96,9 @@ export function TodoForm({ open, onOpenChange, editTodo }: TodoFormProps) {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] bg-card/80 backdrop-blur-md border-border">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-foreground">
             <Plus className="h-5 w-5" />
             {editTodo ? "Edit Todo" : "Create New Todo"}
           </DialogTitle>
