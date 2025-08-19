@@ -3,6 +3,21 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { CheckCircle, Clock, Star, Zap } from "lucide-react";
 
+const featureContainerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const featureCardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
+
 export default function Landing() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/20">
@@ -17,7 +32,7 @@ export default function Landing() {
           <CheckCircle className="h-8 w-8 text-primary" />
           <span className="text-2xl font-bold tracking-tight">TodoFlow</span>
         </div>
-        <AuthButton 
+        <AuthButton
           trigger={
             <Button size="lg" className="rounded-full">
               Get Started Free
@@ -40,17 +55,21 @@ export default function Landing() {
             <span className="text-primary">Effortlessly</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-            The most intuitive todo app that adapts to your workflow. 
-            Capture ideas, set priorities, and achieve your goals with elegant simplicity.
+            The most intuitive todo app that adapts to your workflow.
+            Capture ideas, set priorities, and achieve your goals with elegant
+            simplicity.
           </p>
-          
+
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <AuthButton 
+            <AuthButton
               trigger={
-                <Button size="lg" className="text-lg px-8 py-6 rounded-full shadow-lg">
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 rounded-full shadow-lg"
+                >
                   Start Organizing Today
                 </Button>
               }
@@ -60,40 +79,59 @@ export default function Landing() {
 
         {/* Features Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          variants={featureContainerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
           className="grid md:grid-cols-3 gap-8 mt-32 max-w-5xl mx-auto"
         >
-          <div className="text-center p-8 rounded-2xl bg-card border border-border/50 hover:border-primary/20 transition-colors">
+          <motion.div
+            variants={featureCardVariants}
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="text-center p-8 rounded-2xl bg-card border border-border/50 hover:border-primary/20 transition-colors"
+          >
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Zap className="h-8 w-8 text-primary" />
             </div>
             <h3 className="text-xl font-semibold mb-4">Lightning Fast</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Add and organize todos in seconds. Our streamlined interface keeps you focused on what matters.
+              Add and organize todos in seconds. Our streamlined interface keeps
+              you focused on what matters.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="text-center p-8 rounded-2xl bg-card border border-border/50 hover:border-primary/20 transition-colors">
+          <motion.div
+            variants={featureCardVariants}
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="text-center p-8 rounded-2xl bg-card border border-border/50 hover:border-primary/20 transition-colors"
+          >
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Star className="h-8 w-8 text-primary" />
             </div>
             <h3 className="text-xl font-semibold mb-4">Smart Priorities</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Set priorities and due dates to stay on top of your most important tasks.
+              Set priorities and due dates to stay on top of your most important
+              tasks.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="text-center p-8 rounded-2xl bg-card border border-border/50 hover:border-primary/20 transition-colors">
+          <motion.div
+            variants={featureCardVariants}
+            whileHover={{ scale: 1.05, y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="text-center p-8 rounded-2xl bg-card border border-border/50 hover:border-primary/20 transition-colors"
+          >
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Clock className="h-8 w-8 text-primary" />
             </div>
             <h3 className="text-xl font-semibold mb-4">Real-time Sync</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Access your todos anywhere, anytime. Changes sync instantly across all your devices.
+              Access your todos anywhere, anytime. Changes sync instantly
+              across all your devices.
             </p>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* CTA Section */}
@@ -107,15 +145,19 @@ export default function Landing() {
             Ready to get organized?
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join thousands of users who have transformed their productivity with TodoFlow.
+            Join thousands of users who have transformed their productivity with
+            TodoFlow.
           </p>
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <AuthButton 
+            <AuthButton
               trigger={
-                <Button size="lg" className="text-lg px-8 py-6 rounded-full">
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 rounded-full"
+                >
                   Get Started - It's Free
                 </Button>
               }

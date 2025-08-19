@@ -17,7 +17,7 @@ import { UserButton } from "@/components/auth/UserButton";
 import { api } from "@/convex/_generated/api";
 import { useAuth } from "@/hooks/use-auth";
 import { Protected } from "@/lib/protected-page";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle, Filter, Plus, Search, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "convex/react";
@@ -180,6 +180,7 @@ export default function Dashboard() {
 
           {/* Todo List */}
           <motion.div
+            layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
@@ -208,53 +209,53 @@ export default function Dashboard() {
               </div>
             ) : filteredTodos.length === 0 ? (
               // Empty state
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="text-center py-12"
-              >
+              <AnimatePresence>
                 <motion.div
-                  animate={{ rotate: [0, 5, -5, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
+                  key="empty-state"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-center py-12"
                 >
-                  <CheckCircle className="h-16 w-16 text-white/50 mx-auto mb-4" />
-                </motion.div>
-                <h3 className="text-lg font-semibold mb-2 text-white">
-                  {searchQuery || filterStatus !== "all" || filterPriority !== "all" 
-                    ? "No todos match your filters" 
-                    : "No todos yet"}
-                </h3>
-                <p className="text-white/70 mb-6">
-                  {searchQuery || filterStatus !== "all" || filterPriority !== "all"
-                    ? "Try adjusting your search or filters"
-                    : "Create your first todo to get started"}
-                </p>
-                {(!searchQuery && filterStatus === "all" && filterPriority === "all") && (
-                  <Button 
-                    onClick={() => setShowForm(true)}
-                    className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  <motion.div
+                    animate={{ rotate: [0, 5, -5, 0] }}
+                    transition={{ duration: 3, repeat: Infinity }}
                   >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Create Your First Todo
-                  </Button>
-                )}
-              </motion.div>
+                    <CheckCircle className="h-16 w-16 text-white/50 mx-auto mb-4" />
+                  </motion.div>
+                  <h3 className="text-lg font-semibold mb-2 text-white">
+                    {searchQuery || filterStatus !== "all" || filterPriority !== "all" 
+                      ? "No todos match your filters" 
+                      : "No todos yet"}
+                  </h3>
+                  <p className="text-white/70 mb-6">
+                    {searchQuery || filterStatus !== "all" || filterPriority !== "all"
+                      ? "Try adjusting your search or filters"
+                      : "Create your first todo to get started"}
+                  </p>
+                  {(!searchQuery && filterStatus === "all" && filterPriority === "all") && (
+                    <Button 
+                      onClick={() => setShowForm(true)}
+                      className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Create Your First Todo
+                    </Button>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             ) : (
               // Todo items
-              filteredTodos.map((todo, index) => (
-                <motion.div
-                  key={todo._id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
+              <AnimatePresence initial={false}>
+                {filteredTodos.map((todo) => (
                   <TodoItem
+                    key={todo._id}
                     todo={todo}
                     onEdit={handleEdit}
                   />
-                </motion.div>
-              ))
+                ))}
+              </AnimatePresence>
             )}
           </motion.div>
         </div>

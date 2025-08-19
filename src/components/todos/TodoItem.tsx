@@ -71,9 +71,11 @@ export function TodoItem({ todo, onEdit }: TodoItemProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      layout="position"
+      initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
+      transition={{ type: "spring", stiffness: 260, damping: 25 }}
       whileHover={{ 
         scale: 1.02,
         y: -2,
